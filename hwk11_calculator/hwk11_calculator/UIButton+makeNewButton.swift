@@ -18,11 +18,18 @@ extension UIButton {
         case orange = "#fe9427"
     }
     
-    static func makeButton(textOnButton: String, color: Color = .darkGray) -> UIButton {
+    static func makeButton(textOnButton: String, buttonSide: CGFloat, color: Color = .darkGray, textColor: Color = .white) -> UIButton {
+        
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = UIColor.init(hex: color.rawValue)
-        button.titleLabel?.text = textOnButton
+        button.layer.cornerRadius = buttonSide / 2
+        button.layer.masksToBounds = true
+      
+        button.setTitle(textOnButton, for: .normal)
+        button.titleLabel?.font = UIFont(name: "AvenirNextCondensed-Medium", size: 30)
+        button.setTitleColor(UIColor.init(hex: textColor.rawValue), for: .normal)
+        
         
         return button
     }
