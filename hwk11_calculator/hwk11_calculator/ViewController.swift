@@ -8,6 +8,29 @@
 import UIKit
 
 class ViewController: UIViewController {
+    private var numField: UITextField!
+    //numFieldSize
+    private var numberOfFiguresInNumField: Int = 0
+    
+    private var acButton: UIButton!
+    private var plusminusButton: UIButton!
+    private var percentButton: UIButton!
+    private var divButton: UIButton!
+    private var sevenButton: UIButton!
+    private var eightButton: UIButton!
+    private var nineButton: UIButton!
+    private var multButton: UIButton!
+    private var fourButton: UIButton!
+    private var fiveButton: UIButton!
+    private var sixButton: UIButton!
+    private var minusButton: UIButton!
+    private var oneButton: UIButton!
+    private var twoButton: UIButton!
+    private var threeButton: UIButton!
+    private var plusButton: UIButton!
+    private var zeroButton: UIButton!
+    private var dotButton: UIButton!
+    private var equalButton: UIButton!
     
     private var shadow = UIView()
     
@@ -25,6 +48,7 @@ class ViewController: UIViewController {
 
         view.backgroundColor = UIColor.init(hex: "#000000")
         setElements()
+        workWithButtons()
     }
 
     //MARK: - set elements on screen
@@ -35,30 +59,31 @@ class ViewController: UIViewController {
         let heightOfTextField: CGFloat = 100
         //height  = spaceBetweenTopAndTextField + heightOfTextField + 6 * spaceBetwenButtons + 5 * buttonSide
         let spaceBetweenTopAndTextField = view.frame.height - heightOfTextField - 6 * spaceBetwenButtons - 5 * buttonSide
-        let numField = UITextField.makeTextField()
+        numField = UITextField.makeTextField()
+        numField.text = "0"
         
-        let acButton = UIButton.makeButton(textOnButton: "AC", buttonSide: buttonSide, color: .gray, textColor: .black)
-        let plusminusButton = UIButton.makeButton(textOnButton: "±", buttonSide: buttonSide, color: .gray, textColor: .black)
-        let percentButton = UIButton.makeButton(textOnButton: "%", buttonSide: buttonSide, color: .gray, textColor: .black)
-        let divButton = UIButton.makeButton(textOnButton: "÷", buttonSide: buttonSide, color: .orange)
-        let sevenButton = UIButton.makeButton(textOnButton: "7", buttonSide: buttonSide)
-        let eightButton = UIButton.makeButton(textOnButton: "8", buttonSide: buttonSide)
-        let nineButton = UIButton.makeButton(textOnButton: "9", buttonSide: buttonSide)
-        let multButton = UIButton.makeButton(textOnButton: "×", buttonSide: buttonSide, color: .orange)
-        let fourButton = UIButton.makeButton(textOnButton: "4", buttonSide: buttonSide)
-        let fiveButton = UIButton.makeButton(textOnButton: "5", buttonSide: buttonSide)
-        let sixButton = UIButton.makeButton(textOnButton: "6", buttonSide: buttonSide)
-        let minusButton = UIButton.makeButton(textOnButton: "—", buttonSide: buttonSide, color: .orange)
-        let oneButton = UIButton.makeButton(textOnButton: "1", buttonSide: buttonSide)
-        let twoButton = UIButton.makeButton(textOnButton: "2", buttonSide: buttonSide)
-        let threeButton = UIButton.makeButton(textOnButton: "3", buttonSide: buttonSide)
-        let plusButton = UIButton.makeButton(textOnButton: "+", buttonSide: buttonSide, color: .orange)
-        let zeroButton = UIButton.makeButton(textOnButton: "     0", buttonSide: buttonSide)
+        acButton = UIButton.makeButton(textOnButton: "AC", buttonSide: buttonSide, color: .gray, textColor: .black)
+        plusminusButton = UIButton.makeButton(textOnButton: "±", buttonSide: buttonSide, color: .gray, textColor: .black)
+        percentButton = UIButton.makeButton(textOnButton: "%", buttonSide: buttonSide, color: .gray, textColor: .black)
+        divButton = UIButton.makeButton(textOnButton: "÷", buttonSide: buttonSide, color: .orange)
+        sevenButton = UIButton.makeButton(textOnButton: "7", buttonSide: buttonSide)
+        eightButton = UIButton.makeButton(textOnButton: "8", buttonSide: buttonSide)
+        nineButton = UIButton.makeButton(textOnButton: "9", buttonSide: buttonSide)
+        multButton = UIButton.makeButton(textOnButton: "×", buttonSide: buttonSide, color: .orange)
+        fourButton = UIButton.makeButton(textOnButton: "4", buttonSide: buttonSide)
+        fiveButton = UIButton.makeButton(textOnButton: "5", buttonSide: buttonSide)
+        sixButton = UIButton.makeButton(textOnButton: "6", buttonSide: buttonSide)
+        minusButton = UIButton.makeButton(textOnButton: "—", buttonSide: buttonSide, color: .orange)
+        oneButton = UIButton.makeButton(textOnButton: "1", buttonSide: buttonSide)
+        twoButton = UIButton.makeButton(textOnButton: "2", buttonSide: buttonSide)
+        threeButton = UIButton.makeButton(textOnButton: "3", buttonSide: buttonSide)
+        plusButton = UIButton.makeButton(textOnButton: "+", buttonSide: buttonSide, color: .orange)
+        zeroButton = UIButton.makeButton(textOnButton: "     0", buttonSide: buttonSide)
         zeroButton.contentHorizontalAlignment = .left
-        let dotButton = UIButton.makeButton(textOnButton: ",", buttonSide: buttonSide)
-        let equalButton = UIButton.makeButton(textOnButton: "=", buttonSide: buttonSide, color: .orange)
+        dotButton = UIButton.makeButton(textOnButton: ",", buttonSide: buttonSide)
+        equalButton = UIButton.makeButton(textOnButton: "=", buttonSide: buttonSide, color: .orange)
         
-        let arrayOfButtons = [acButton, plusminusButton, percentButton, sevenButton, eightButton, nineButton, fourButton, fiveButton, sixButton, oneButton, twoButton, threeButton, dotButton, zeroButton, equalButton, multButton, minusButton, divButton, plusButton]
+        let arrayOfButtons: [UIButton] = [acButton, plusminusButton, percentButton, sevenButton, eightButton, nineButton, fourButton, fiveButton, sixButton, oneButton, twoButton, threeButton, dotButton, zeroButton, equalButton, multButton, minusButton, divButton, plusButton]
         
         view.addSubview(numField)
         
@@ -175,8 +200,19 @@ class ViewController: UIViewController {
         ])
     }
     
+    private func workWithButtons() {
+        let arrayOfNum: [UIButton] = [sevenButton, eightButton, nineButton, fourButton, fiveButton, sixButton, oneButton, twoButton, threeButton]
+        
+        for button in arrayOfNum {
+            button.addTarget(self, action: #selector(pressedNum), for: .touchUpInside)
+        }
+        
+        dotButton.addTarget(self, action: #selector(pressedDot), for: .touchUpInside)
+        
+    }
+    
     @objc private func touchDown(sender: UIButton) {
-        //view.layer.removeAllAnimations()
+        
         shadow = UIView(frame: sender.frame)
         shadow.backgroundColor = .init(white: 1, alpha: 0.3)
         shadow.frame.origin = sender.frame.origin
@@ -184,7 +220,7 @@ class ViewController: UIViewController {
         shadow.layer.masksToBounds = true
         view.addSubview(shadow)
     }
-
+    
     @objc private func touchUp() {
         UIView.animate(withDuration: 0.45, animations: {
             self.shadow.layer.opacity = 0
@@ -193,8 +229,32 @@ class ViewController: UIViewController {
         })
     }
     
+    @objc private func pressedNum(sender: UIButton) {
+        if numField.text == "0" || numField.text == "Error" {
+            numField.text = sender.titleLabel?.text
+            acButton.setTitle("C", for: .normal)
+            numberOfFiguresInNumField += 1
+        } else if numberOfFiguresInNumField < 9 {
+            numField.text! += (sender.titleLabel?.text)!
+            numberOfFiguresInNumField += 1
+        }
+    }
+    
+    @objc private func pressedDot() {
+        if numField.text == "Error" {
+            numField.text = "0,"
+        } else if (numberOfFiguresInNumField < 9 && !numField.text!.contains(",") ) {
+            numField.text! += ","
+        }
+        
+        
+        
+    }
+    
 
 }
+    
+    
 
 
 

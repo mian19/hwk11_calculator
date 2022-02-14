@@ -18,7 +18,7 @@ extension UITextField {
         tF.backgroundColor = UIColor(hex: "#000000")
         tF.textColor = .white
         tF.tintColor = .clear
-        tF.isUserInteractionEnabled = false
+        tF.inputView = UIView()
         tF.font = UIFont(name: "AvenirNextCondensed-Regular", size: 60)
         return tF
     }
