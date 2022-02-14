@@ -208,6 +208,7 @@ class ViewController: UIViewController {
         }
         
         dotButton.addTarget(self, action: #selector(pressedDot), for: .touchUpInside)
+        acButton.addTarget(self, action: #selector(pressedAC), for: .touchUpInside)
         
     }
     
@@ -243,12 +244,22 @@ class ViewController: UIViewController {
     @objc private func pressedDot() {
         if numField.text == "Error" {
             numField.text = "0,"
+            acButton.setTitle("C", for: .normal)
         } else if (numberOfFiguresInNumField < 9 && !numField.text!.contains(",") ) {
             numField.text! += ","
+            acButton.setTitle("C", for: .normal)
         }
-        
-        
-        
+    }
+    
+    @objc private func pressedAC() {
+        switch numField.text {
+        case "0":
+            break
+        default:
+            numField.text = "0"
+            numberOfFiguresInNumField = 0
+            acButton.setTitle("AC", for: .normal)
+        }
     }
     
 
