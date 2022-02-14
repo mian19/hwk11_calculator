@@ -9,6 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    private var shadow = UIView()
+    
     //MARK: - design for status bar
     override var prefersStatusBarHidden: Bool {
         return false
@@ -42,7 +44,7 @@ class ViewController: UIViewController {
         let sevenButton = UIButton.makeButton(textOnButton: "7", buttonSide: buttonSide)
         let eightButton = UIButton.makeButton(textOnButton: "8", buttonSide: buttonSide)
         let nineButton = UIButton.makeButton(textOnButton: "9", buttonSide: buttonSide)
-        let multButton = UIButton.makeButton(textOnButton: "x", buttonSide: buttonSide, color: .orange)
+        let multButton = UIButton.makeButton(textOnButton: "×", buttonSide: buttonSide, color: .orange)
         let fourButton = UIButton.makeButton(textOnButton: "4", buttonSide: buttonSide)
         let fiveButton = UIButton.makeButton(textOnButton: "5", buttonSide: buttonSide)
         let sixButton = UIButton.makeButton(textOnButton: "6", buttonSide: buttonSide)
@@ -51,33 +53,21 @@ class ViewController: UIViewController {
         let twoButton = UIButton.makeButton(textOnButton: "2", buttonSide: buttonSide)
         let threeButton = UIButton.makeButton(textOnButton: "3", buttonSide: buttonSide)
         let plusButton = UIButton.makeButton(textOnButton: "+", buttonSide: buttonSide, color: .orange)
-        let zeroButton = UIButton.makeButton(textOnButton: "     0", buttonSide: buttonSide)
+        let zeroButton = UIButton.makeButton(textOnButton: "    0", buttonSide: buttonSide)
         zeroButton.contentHorizontalAlignment = .left
         let dotButton = UIButton.makeButton(textOnButton: ",", buttonSide: buttonSide)
         let equalButton = UIButton.makeButton(textOnButton: "=", buttonSide: buttonSide, color: .orange)
         
+        let arrayOfButtons = [acButton, plusminusButton, percentButton, divButton, sevenButton, eightButton, nineButton, multButton, fourButton, fiveButton, sixButton, minusButton, oneButton, twoButton, threeButton, plusButton, zeroButton, dotButton, equalButton]
         
         view.addSubview(numField)
-        view.addSubview(acButton)
-        view.addSubview(plusminusButton)
-        view.addSubview(percentButton)
-        view.addSubview(divButton)
-        view.addSubview(sevenButton)
-        view.addSubview(eightButton)
-        view.addSubview(nineButton)
-        view.addSubview(multButton)
-        view.addSubview(fourButton)
-        view.addSubview(fiveButton)
-        view.addSubview(sixButton)
-        view.addSubview(minusButton)
-        view.addSubview(oneButton)
-        view.addSubview(twoButton)
-        view.addSubview(threeButton)
-        view.addSubview(plusButton)
-        view.addSubview(zeroButton)
-        view.addSubview(dotButton)
-        view.addSubview(equalButton)
         
+        for button in arrayOfButtons {
+            view.addSubview(button)
+            button.addTarget(self, action: #selector(touchDown), for: [.touchDown, .touchDragEnter])
+            button.addTarget(self, action: #selector(touchUp), for: [.touchUpOutside, .touchDragOutside, .touchUpInside])
+        }
+    
         
         //MARK: - add constraints
         NSLayoutConstraint.activate([
@@ -186,6 +176,25 @@ class ViewController: UIViewController {
         ])
     }
     
+    @objc private func touchDown(sender: UIButton) {
+        //view.layer.removeAllAnimations()
+        shadow = UIView(frame: sender.frame)
+        shadow.backgroundColor = .init(white: 1, alpha: 0.3)
+        shadow.frame.origin = sender.frame.origin
+        shadow.layer.cornerRadius = shadow.frame.height / 2
+        shadow.layer.masksToBounds = true
+        view.addSubview(shadow)
+    }
+
+    @objc private func touchUp() {
+        UIView.animate(withDuration: 0.45, animations: {
+            self.shadow.layer.opacity = 0
+        }, completion: {_ in
+            self.shadow.removeFromSuperview()
+        })
+    }
+    
+
 }
 
 
