@@ -53,12 +53,12 @@ class ViewController: UIViewController {
         let twoButton = UIButton.makeButton(textOnButton: "2", buttonSide: buttonSide)
         let threeButton = UIButton.makeButton(textOnButton: "3", buttonSide: buttonSide)
         let plusButton = UIButton.makeButton(textOnButton: "+", buttonSide: buttonSide, color: .orange)
-        let zeroButton = UIButton.makeButton(textOnButton: "    0", buttonSide: buttonSide)
+        let zeroButton = UIButton.makeButton(textOnButton: "     0", buttonSide: buttonSide)
         zeroButton.contentHorizontalAlignment = .left
         let dotButton = UIButton.makeButton(textOnButton: ",", buttonSide: buttonSide)
         let equalButton = UIButton.makeButton(textOnButton: "=", buttonSide: buttonSide, color: .orange)
         
-        let arrayOfButtons = [acButton, plusminusButton, percentButton, divButton, sevenButton, eightButton, nineButton, multButton, fourButton, fiveButton, sixButton, minusButton, oneButton, twoButton, threeButton, plusButton, zeroButton, dotButton, equalButton]
+        let arrayOfButtons = [acButton, plusminusButton, percentButton, sevenButton, eightButton, nineButton, fourButton, fiveButton, sixButton, oneButton, twoButton, threeButton, dotButton, zeroButton, equalButton, multButton, minusButton, divButton, plusButton]
         
         view.addSubview(numField)
         
@@ -67,7 +67,6 @@ class ViewController: UIViewController {
             button.addTarget(self, action: #selector(touchDown), for: [.touchDown, .touchDragEnter])
             button.addTarget(self, action: #selector(touchUp), for: [.touchUpOutside, .touchDragOutside, .touchUpInside])
         }
-    
         
         //MARK: - add constraints
         NSLayoutConstraint.activate([

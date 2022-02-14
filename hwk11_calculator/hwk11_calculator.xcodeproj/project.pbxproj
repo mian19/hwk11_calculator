@@ -65,9 +65,9 @@
 				6761E40227B59AF4003F82EF /* AppDelegate.swift */,
 				6761E40427B59AF4003F82EF /* SceneDelegate.swift */,
 				6761E41627B59F01003F82EF /* UIColor+hexColor.swift */,
-				6761E40627B59AF4003F82EF /* ViewController.swift */,
 				6754FFF727B6806100E7DD92 /* UIButton+makeNewButton.swift */,
 				6754FFF927B68E7800E7DD92 /* UITextField+makeNewTextField.swift */,
+				6761E40627B59AF4003F82EF /* ViewController.swift */,
 				6761E40827B59AF4003F82EF /* Main.storyboard */,
 				6761E40B27B59AF6003F82EF /* Assets.xcassets */,
 				6761E40D27B59AF6003F82EF /* LaunchScreen.storyboard */,
@@ -308,6 +308,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -335,6 +336,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
