@@ -18,6 +18,11 @@ extension UIButton {
         case orange = "#fe9427"
     }
     
+    enum Active {
+        case yes
+        case no
+    }
+    
     static func makeButton(textOnButton: String, buttonSide: CGFloat, color: Color = .darkGray, textColor: Color = .white) -> UIButton {
         
         let button = UIButton()
@@ -32,6 +37,8 @@ extension UIButton {
         button.setTitleColor(UIColor.init(hex: textColor.rawValue), for: .normal)
         return button
     }
+    
+   
     
     
  

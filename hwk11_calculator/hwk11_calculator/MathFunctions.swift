@@ -7,15 +7,11 @@
 
 import Foundation
 
-
-
 func percent(userInput: String) -> String{
     var convertedNum: Double = converterFrom(str: userInput)
-    
     convertedNum /= 100
     
     return converterTo(num: convertedNum)
-    
 }
 
 //MARK: - func for convert from String to Double
@@ -27,14 +23,14 @@ private func converterFrom(str: String) -> Double {
     } else {
         returnNum = Double(str) ?? 0
     }
-    
     return returnNum
 }
 
 //MARK: - func for convert from Double to String
 private func converterTo(num: Double) -> String {
     var returnStr: String = ""
-    returnStr = String(num)
+    returnStr = String(Double(round(10000 * num) / 10000))
+    
     if returnStr.contains(".") {
         returnStr = returnStr.replacingOccurrences(of: ".", with: ",", options: .literal, range: nil)
     }

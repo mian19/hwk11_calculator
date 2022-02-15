@@ -8,9 +8,15 @@
 import UIKit
 
 class ViewController: UIViewController {
-    private var numField: UITextField!
+    private var numField: NumTextField!
     //numFieldSize
     private var numberOfFiguresInNumField: Int = 0
+    
+    private let itemCopy = UIMenuItem(title: "Copy", action: #selector(copyFromNumField))
+    private let itemPaste = UIMenuItem(title: "Paste", action: #selector(pasteToNumField))
+    
+    //memory buffer
+    private var memoryBuffer: String = ""
     
     private var acButton: UIButton!
     private var plusminusButton: UIButton!
@@ -33,6 +39,9 @@ class ViewController: UIViewController {
     private var equalButton: UIButton!
     
     private var shadow = UIView()
+    private var activeAction: String = ""
+    private var num1: String = ""
+    private var num2: String = ""
     
     //MARK: - design for status bar
     override var prefersStatusBarHidden: Bool {
@@ -47,7 +56,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.init(hex: "#000000")
+
         setElements()
+        workWithAddMenu()
         workWithButtons()
     }
     
@@ -59,9 +70,8 @@ class ViewController: UIViewController {
         let heightOfTextField: CGFloat = 100
         //height  = spaceBetweenTopAndTextField + heightOfTextField + 6 * spaceBetwenButtons + 5 * buttonSide
         let spaceBetweenTopAndTextField = view.frame.height - heightOfTextField - 6 * spaceBetwenButtons - 5 * buttonSide
-        numField = UITextField.makeTextField()
+        numField = NumTextField.makeTextField()
         numField.text = "0"
-        
         acButton = UIButton.makeButton(textOnButton: "AC", buttonSide: buttonSide, color: .gray, textColor: .black)
         plusminusButton = UIButton.makeButton(textOnButton: "±", buttonSide: buttonSide, color: .gray, textColor: .black)
         percentButton = UIButton.makeButton(textOnButton: "%", buttonSide: buttonSide, color: .gray, textColor: .black)
@@ -78,7 +88,7 @@ class ViewController: UIViewController {
         twoButton = UIButton.makeButton(textOnButton: "2", buttonSide: buttonSide)
         threeButton = UIButton.makeButton(textOnButton: "3", buttonSide: buttonSide)
         plusButton = UIButton.makeButton(textOnButton: "+", buttonSide: buttonSide, color: .orange)
-        zeroButton = UIButton.makeButton(textOnButton: "     0", buttonSide: buttonSide)
+        zeroButton = UIButton.makeButton(textOnButton: "    0", buttonSide: buttonSide)
         zeroButton.contentHorizontalAlignment = .left
         dotButton = UIButton.makeButton(textOnButton: ",", buttonSide: buttonSide)
         equalButton = UIButton.makeButton(textOnButton: "=", buttonSide: buttonSide, color: .orange)
@@ -185,8 +195,7 @@ class ViewController: UIViewController {
             zeroButton.widthAnchor.constraint(equalToConstant: buttonSide * 2 + spaceBetwenButtons),
             zeroButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: spaceBetwenButtons),
             zeroButton.topAnchor.constraint(equalTo: oneButton.bottomAnchor, constant: spaceBetwenButtons),
-            
-            
+                        
             dotButton.heightAnchor.constraint(equalToConstant: buttonSide),
             dotButton.widthAnchor.constraint(equalToConstant: buttonSide),
             dotButton.leadingAnchor.constraint(equalTo: zeroButton.trailingAnchor, constant: spaceBetwenButtons),
@@ -196,15 +205,19 @@ class ViewController: UIViewController {
             equalButton.widthAnchor.constraint(equalToConstant: buttonSide),
             equalButton.topAnchor.constraint(equalTo: oneButton.bottomAnchor, constant: spaceBetwenButtons),
             view.trailingAnchor.constraint(equalTo: equalButton.trailingAnchor, constant: spaceBetwenButtons),
-            
         ])
     }
     
     private func workWithButtons() {
         let arrayOfNum: [UIButton] = [sevenButton, eightButton, nineButton, fourButton, fiveButton, sixButton, oneButton, twoButton, threeButton]
+        let arrayOfActions: [UIButton] = [divButton, multButton, minusButton, plusButton]
         
         for button in arrayOfNum {
             button.addTarget(self, action: #selector(pressedNum), for: .touchUpInside)
+        }
+        
+        for button in arrayOfActions {
+            button.addTarget(self, action: #selector(pressedAction), for: .touchUpInside)
         }
         
         dotButton.addTarget(self, action: #selector(pressedDot), for: .touchUpInside)
@@ -212,6 +225,12 @@ class ViewController: UIViewController {
         plusminusButton.addTarget(self, action: #selector(pressedPlusMinus), for: .touchUpInside)
         zeroButton.addTarget(self, action: #selector(pressedZero), for: .touchUpInside)
         percentButton.addTarget(self, action: #selector(pressedPercent), for: .touchUpInside)
+        
+    }
+    
+    private func workWithAddMenu() {
+        //Add custom copy|paste
+        UIMenuController.shared.menuItems = [itemCopy]
     }
     
     @objc private func touchDown(sender: UIButton) {
@@ -297,11 +316,25 @@ class ViewController: UIViewController {
         }
         numField.text = percent(userInput: numField.text!)
     }
-
+    
+    @objc private func pressedAction(sender: UIButton) {
+        activeAction = (sender.titleLabel?.text)!
+        sender.backgroundColor = .white
+        sender.setTitleColor(UIColor.init(hex: "#fe9427" ), for: .normal)
+    }
+    
+    @objc private func copyFromNumField() {
+        memoryBuffer += numField.text!
+        UIMenuController.shared.menuItems = [itemCopy, itemPaste]
+    }
+    
+    @objc private func pasteToNumField() {
+        numField.text = memoryBuffer
+    }
     
 }
 
-    
+
 
 
 

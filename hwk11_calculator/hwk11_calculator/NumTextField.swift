@@ -10,9 +10,13 @@ import UIKit
 
 
 
-extension UITextField {
-    static func makeTextField() -> UITextField {
-        let tF = UITextField()
+class NumTextField: UITextField {
+    
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return false
+    }
+    static func makeTextField() -> NumTextField {
+        let tF = NumTextField()
         tF.translatesAutoresizingMaskIntoConstraints = false
         tF.textAlignment = .right
         tF.backgroundColor = UIColor(hex: "#000000")
