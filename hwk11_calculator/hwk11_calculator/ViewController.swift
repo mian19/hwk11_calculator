@@ -211,6 +211,7 @@ class ViewController: UIViewController {
         acButton.addTarget(self, action: #selector(pressedAC), for: .touchUpInside)
         plusminusButton.addTarget(self, action: #selector(pressedPlusMinus), for: .touchUpInside)
         zeroButton.addTarget(self, action: #selector(pressedZero), for: .touchUpInside)
+        percentButton.addTarget(self, action: #selector(pressedPercent), for: .touchUpInside)
     }
     
     @objc private func touchDown(sender: UIButton) {
@@ -257,7 +258,6 @@ class ViewController: UIViewController {
         }
     }
     
-    
     @objc private func pressedDot() {
         if numField.text == "Error" {
             numField.text = "0,"
@@ -282,6 +282,7 @@ class ViewController: UIViewController {
     @objc private func pressedPlusMinus() {
         if !numField.text!.contains("-")  && numField.text != "Error" {
             numField.text! = "-" + numField.text!
+            acButton.setTitle("C", for: .normal)
         } else if numField.text == "Error" {
             numField.text = "0,"
             acButton.setTitle("C", for: .normal)
@@ -290,6 +291,13 @@ class ViewController: UIViewController {
         }
     }
     
+    @objc private func pressedPercent() {
+        if numField.text == "Error" {
+            return
+        }
+        numField.text = percent(userInput: numField.text!)
+    }
+
     
 }
 
