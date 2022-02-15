@@ -8,8 +8,38 @@
 import UIKit
 
 class ViewController: UIViewController {
+    private var numField: NumTextField!
+    
+    private let itemCopy = UIMenuItem(title: "Copy", action: #selector(copyFromNumField))
+    private let itemPaste = UIMenuItem(title: "Paste", action: #selector(pasteToNumField))
+    
+    //memory buffer
+    private var memoryBuffer: String = ""
+    
+    private var acButton: ActionButton!
+    private var plusminusButton: ActionButton!
+    private var percentButton: ActionButton!
+    private var divButton: ActionButton!
+    private var sevenButton: ActionButton!
+    private var eightButton: ActionButton!
+    private var nineButton: ActionButton!
+    private var multButton: ActionButton!
+    private var fourButton:ActionButton!
+    private var fiveButton:ActionButton!
+    private var sixButton: ActionButton!
+    private var minusButton: ActionButton!
+    private var oneButton: ActionButton!
+    private var twoButton: ActionButton!
+    private var threeButton: ActionButton!
+    private var plusButton: ActionButton!
+    private var zeroButton: ActionButton!
+    private var dotButton: ActionButton!
+    private var equalButton: ActionButton!
     
     private var shadow = UIView()
+    private var num1: String = ""
+    private var num2: String = ""
+    private var action: String = ""
     
     //MARK: - design for status bar
     override var prefersStatusBarHidden: Bool {
@@ -19,14 +49,17 @@ class ViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = UIColor.init(hex: "#000000")
+        
         setElements()
+        workWithAddMenu()
+        workWithButtons()
     }
-
+    
     //MARK: - set elements on screen
     private func setElements() {
         //width = 5 spaces * 15 + 4 * buttonSide
@@ -35,30 +68,30 @@ class ViewController: UIViewController {
         let heightOfTextField: CGFloat = 100
         //height  = spaceBetweenTopAndTextField + heightOfTextField + 6 * spaceBetwenButtons + 5 * buttonSide
         let spaceBetweenTopAndTextField = view.frame.height - heightOfTextField - 6 * spaceBetwenButtons - 5 * buttonSide
-        let numField = UITextField.makeTextField()
-        
-        let acButton = UIButton.makeButton(textOnButton: "AC", buttonSide: buttonSide, color: .gray, textColor: .black)
-        let plusminusButton = UIButton.makeButton(textOnButton: "±", buttonSide: buttonSide, color: .gray, textColor: .black)
-        let percentButton = UIButton.makeButton(textOnButton: "%", buttonSide: buttonSide, color: .gray, textColor: .black)
-        let divButton = UIButton.makeButton(textOnButton: "÷", buttonSide: buttonSide, color: .orange)
-        let sevenButton = UIButton.makeButton(textOnButton: "7", buttonSide: buttonSide)
-        let eightButton = UIButton.makeButton(textOnButton: "8", buttonSide: buttonSide)
-        let nineButton = UIButton.makeButton(textOnButton: "9", buttonSide: buttonSide)
-        let multButton = UIButton.makeButton(textOnButton: "×", buttonSide: buttonSide, color: .orange)
-        let fourButton = UIButton.makeButton(textOnButton: "4", buttonSide: buttonSide)
-        let fiveButton = UIButton.makeButton(textOnButton: "5", buttonSide: buttonSide)
-        let sixButton = UIButton.makeButton(textOnButton: "6", buttonSide: buttonSide)
-        let minusButton = UIButton.makeButton(textOnButton: "—", buttonSide: buttonSide, color: .orange)
-        let oneButton = UIButton.makeButton(textOnButton: "1", buttonSide: buttonSide)
-        let twoButton = UIButton.makeButton(textOnButton: "2", buttonSide: buttonSide)
-        let threeButton = UIButton.makeButton(textOnButton: "3", buttonSide: buttonSide)
-        let plusButton = UIButton.makeButton(textOnButton: "+", buttonSide: buttonSide, color: .orange)
-        let zeroButton = UIButton.makeButton(textOnButton: "     0", buttonSide: buttonSide)
+        numField = NumTextField.makeTextField()
+        numField.text = "0"
+        acButton = ActionButton.makeButton(textOnButton: "AC", buttonSide: buttonSide, color: .gray, textColor: .black)
+        plusminusButton = ActionButton.makeButton(textOnButton: "±", buttonSide: buttonSide, color: .gray, textColor: .black)
+        percentButton = ActionButton.makeButton(textOnButton: "%", buttonSide: buttonSide, color: .gray, textColor: .black)
+        divButton = ActionButton.makeButton(textOnButton: "÷", buttonSide: buttonSide, color: .orange)
+        sevenButton = ActionButton.makeButton(textOnButton: "7", buttonSide: buttonSide)
+        eightButton = ActionButton.makeButton(textOnButton: "8", buttonSide: buttonSide)
+        nineButton = ActionButton.makeButton(textOnButton: "9", buttonSide: buttonSide)
+        multButton = ActionButton.makeButton(textOnButton: "×", buttonSide: buttonSide, color: .orange)
+        fourButton = ActionButton.makeButton(textOnButton: "4", buttonSide: buttonSide)
+        fiveButton = ActionButton.makeButton(textOnButton: "5", buttonSide: buttonSide)
+        sixButton = ActionButton.makeButton(textOnButton: "6", buttonSide: buttonSide)
+        minusButton = ActionButton.makeButton(textOnButton: "—", buttonSide: buttonSide, color: .orange)
+        oneButton = ActionButton.makeButton(textOnButton: "1", buttonSide: buttonSide)
+        twoButton = ActionButton.makeButton(textOnButton: "2", buttonSide: buttonSide)
+        threeButton = ActionButton.makeButton(textOnButton: "3", buttonSide: buttonSide)
+        plusButton = ActionButton.makeButton(textOnButton: "+", buttonSide: buttonSide, color: .orange)
+        zeroButton = ActionButton.makeButton(textOnButton: "    0", buttonSide: buttonSide)
         zeroButton.contentHorizontalAlignment = .left
-        let dotButton = UIButton.makeButton(textOnButton: ",", buttonSide: buttonSide)
-        let equalButton = UIButton.makeButton(textOnButton: "=", buttonSide: buttonSide, color: .orange)
+        dotButton = ActionButton.makeButton(textOnButton: ",", buttonSide: buttonSide)
+        equalButton = ActionButton.makeButton(textOnButton: "=", buttonSide: buttonSide, color: .orange)
         
-        let arrayOfButtons = [acButton, plusminusButton, percentButton, sevenButton, eightButton, nineButton, fourButton, fiveButton, sixButton, oneButton, twoButton, threeButton, dotButton, zeroButton, equalButton, multButton, minusButton, divButton, plusButton]
+        let arrayOfButtons: [ActionButton] = [acButton, plusminusButton, percentButton, sevenButton, eightButton, nineButton, fourButton, fiveButton, sixButton, oneButton, twoButton, threeButton, dotButton, zeroButton, equalButton, multButton, minusButton, divButton, plusButton]
         
         view.addSubview(numField)
         
@@ -120,17 +153,17 @@ class ViewController: UIViewController {
             fourButton.widthAnchor.constraint(equalToConstant: buttonSide),
             fourButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: spaceBetwenButtons),
             fourButton.topAnchor.constraint(equalTo: sevenButton.bottomAnchor, constant: spaceBetwenButtons),
-
+            
             fiveButton.heightAnchor.constraint(equalToConstant: buttonSide),
             fiveButton.widthAnchor.constraint(equalToConstant: buttonSide),
             fiveButton.leadingAnchor.constraint(equalTo: fourButton.trailingAnchor, constant: spaceBetwenButtons),
             fiveButton.topAnchor.constraint(equalTo: sevenButton.bottomAnchor, constant: spaceBetwenButtons),
-
+            
             sixButton.heightAnchor.constraint(equalToConstant: buttonSide),
             sixButton.widthAnchor.constraint(equalToConstant: buttonSide),
             sixButton.leadingAnchor.constraint(equalTo: fiveButton.trailingAnchor, constant: spaceBetwenButtons),
             sixButton.topAnchor.constraint(equalTo: sevenButton.bottomAnchor, constant: spaceBetwenButtons),
-
+            
             minusButton.heightAnchor.constraint(equalToConstant: buttonSide),
             minusButton.widthAnchor.constraint(equalToConstant: buttonSide),
             minusButton.topAnchor.constraint(equalTo: sevenButton.bottomAnchor, constant: spaceBetwenButtons),
@@ -140,17 +173,17 @@ class ViewController: UIViewController {
             oneButton.widthAnchor.constraint(equalToConstant: buttonSide),
             oneButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: spaceBetwenButtons),
             oneButton.topAnchor.constraint(equalTo: fourButton.bottomAnchor, constant: spaceBetwenButtons),
-
+            
             twoButton.heightAnchor.constraint(equalToConstant: buttonSide),
             twoButton.widthAnchor.constraint(equalToConstant: buttonSide),
             twoButton.leadingAnchor.constraint(equalTo: fourButton.trailingAnchor, constant: spaceBetwenButtons),
             twoButton.topAnchor.constraint(equalTo: fourButton.bottomAnchor, constant: spaceBetwenButtons),
-
+            
             threeButton.heightAnchor.constraint(equalToConstant: buttonSide),
             threeButton.widthAnchor.constraint(equalToConstant: buttonSide),
             threeButton.leadingAnchor.constraint(equalTo: fiveButton.trailingAnchor, constant: spaceBetwenButtons),
             threeButton.topAnchor.constraint(equalTo: fourButton.bottomAnchor, constant: spaceBetwenButtons),
-
+            
             plusButton.heightAnchor.constraint(equalToConstant: buttonSide),
             plusButton.widthAnchor.constraint(equalToConstant: buttonSide),
             plusButton.topAnchor.constraint(equalTo: fourButton.bottomAnchor, constant: spaceBetwenButtons),
@@ -160,23 +193,46 @@ class ViewController: UIViewController {
             zeroButton.widthAnchor.constraint(equalToConstant: buttonSide * 2 + spaceBetwenButtons),
             zeroButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: spaceBetwenButtons),
             zeroButton.topAnchor.constraint(equalTo: oneButton.bottomAnchor, constant: spaceBetwenButtons),
-
-
+            
             dotButton.heightAnchor.constraint(equalToConstant: buttonSide),
             dotButton.widthAnchor.constraint(equalToConstant: buttonSide),
             dotButton.leadingAnchor.constraint(equalTo: zeroButton.trailingAnchor, constant: spaceBetwenButtons),
             dotButton.topAnchor.constraint(equalTo: oneButton.bottomAnchor, constant: spaceBetwenButtons),
-
+            
             equalButton.heightAnchor.constraint(equalToConstant: buttonSide),
             equalButton.widthAnchor.constraint(equalToConstant: buttonSide),
             equalButton.topAnchor.constraint(equalTo: oneButton.bottomAnchor, constant: spaceBetwenButtons),
             view.trailingAnchor.constraint(equalTo: equalButton.trailingAnchor, constant: spaceBetwenButtons),
-                    
         ])
     }
     
+    private func workWithButtons() {
+        let arrayOfNum: [UIButton] = [sevenButton, eightButton, nineButton, fourButton, fiveButton, sixButton, oneButton, twoButton, threeButton]
+        let arrayOfActions: [UIButton] = [divButton, multButton, minusButton, plusButton]
+        
+        for button in arrayOfNum {
+            button.addTarget(self, action: #selector(pressedNum), for: .touchUpInside)
+        }
+        
+        for button in arrayOfActions {
+            button.addTarget(self, action: #selector(pressedAction), for: .touchUpInside)
+        }
+        
+        dotButton.addTarget(self, action: #selector(pressedDot), for: .touchUpInside)
+        acButton.addTarget(self, action: #selector(pressedAC), for: .touchUpInside)
+        plusminusButton.addTarget(self, action: #selector(pressedPlusMinus), for: .touchUpInside)
+        zeroButton.addTarget(self, action: #selector(pressedZero), for: .touchUpInside)
+        percentButton.addTarget(self, action: #selector(pressedPercent), for: .touchUpInside)
+        equalButton.addTarget(self, action: #selector(pressedEqual), for: .touchUpInside)
+        
+    }
+    
+    private func workWithAddMenu() {
+        //Add custom copy|paste
+        UIMenuController.shared.menuItems = [itemCopy]
+    }
+    
     @objc private func touchDown(sender: UIButton) {
-        //view.layer.removeAllAnimations()
         shadow = UIView(frame: sender.frame)
         shadow.backgroundColor = .init(white: 1, alpha: 0.3)
         shadow.frame.origin = sender.frame.origin
@@ -184,17 +240,116 @@ class ViewController: UIViewController {
         shadow.layer.masksToBounds = true
         view.addSubview(shadow)
     }
-
+    
     @objc private func touchUp() {
-        UIView.animate(withDuration: 0.45, animations: {
+        UIView.animate(withDuration: 0.25, animations: {
             self.shadow.layer.opacity = 0
         }, completion: {_ in
             self.shadow.removeFromSuperview()
         })
     }
     
-
+    @objc private func pressedNum(sender: UIButton) {
+        if numField.text == "0" || numField.text == "Error" {
+            numField.text = sender.titleLabel?.text
+            acButton.setTitle("C", for: .normal)
+        } else if (numField.text == "-0") {
+            numField.text = "-" + (sender.titleLabel?.text)!
+            acButton.setTitle("C", for: .normal)
+        } else  {
+            numField.text! += (sender.titleLabel?.text)!
+        }
+    }
+    
+    @objc private func pressedZero(sender: UIButton) {
+        if numField.text! == "0" || numField.text! == "-0"   {
+            return
+        } else if numField.text == "Error" {
+            numField.text = "0"
+        } else {
+            numField.text! += "0"
+        }
+    }
+    
+    @objc private func pressedDot() {
+        if numField.text == "Error" {
+            numField.text = "0,"
+            acButton.setTitle("C", for: .normal)
+        } else if ( !numField.text!.contains(",") ) {
+            numField.text! += ","
+            acButton.setTitle("C", for: .normal)
+        }
+    }
+    
+    @objc private func pressedAC() {
+        switch numField.text {
+        case "0":
+            break
+        default:
+            numField.text = "0"
+            acButton.setTitle("AC", for: .normal)
+        }
+        num1 = ""
+        num2 = ""
+        action = ""
+    }
+    
+    @objc private func pressedPlusMinus() {
+        if !numField.text!.contains("-")  && numField.text != "Error" {
+            numField.text! = "-" + numField.text!
+            acButton.setTitle("C", for: .normal)
+        } else if numField.text == "Error" {
+            numField.text = "0,"
+            acButton.setTitle("C", for: .normal)
+        } else if numField.text!.contains("-") {
+            numField.text = String(numField.text!.dropFirst())
+        }
+    }
+    
+    @objc private func pressedPercent() {
+        if numField.text == "Error" {
+            return
+        }
+        numField.text = percent(userInput: numField.text!)
+    }
+    
+    @objc private func pressedAction(sender: ActionButton) {
+        if num1 == "" {
+            num1 = numField.text!
+            action = (sender.titleLabel?.text)!
+        }
+        
+        if action != "" && action != (sender.titleLabel?.text)! {
+            action = (sender.titleLabel?.text)!
+        }
+        
+        numField.text = ""
+    }
+    
+    @objc private func pressedEqual() {
+        if num1 == ""  {
+            return
+        } else {
+            num2 = numField.text!
+            numField.text = mathSolving(num1: num1, num2: num2, action: action)
+            num2 = ""
+            action = ""
+            num1 = ""
+        }
+    }
+    
+    @objc private func copyFromNumField() {
+        memoryBuffer += numField.text!
+        UIMenuController.shared.menuItems = [itemCopy, itemPaste]
+    }
+    
+    @objc private func pasteToNumField() {
+        numField.text = memoryBuffer
+    }
+    
 }
+
+
 
 
 

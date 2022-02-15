@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-extension UIButton {
+class ActionButton: UIButton {
     
     enum Color: String {
         case black = "#000000"
@@ -18,9 +18,9 @@ extension UIButton {
         case orange = "#fe9427"
     }
     
-    static func makeButton(textOnButton: String, buttonSide: CGFloat, color: Color = .darkGray, textColor: Color = .white) -> UIButton {
+    static func makeButton(textOnButton: String, buttonSide: CGFloat, color: Color = .darkGray, textColor: Color = .white) -> ActionButton {
         
-        let button = UIButton()
+        let button = ActionButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = UIColor.init(hex: color.rawValue)
@@ -32,6 +32,8 @@ extension UIButton {
         button.setTitleColor(UIColor.init(hex: textColor.rawValue), for: .normal)
         return button
     }
+    
+   
     
     
  

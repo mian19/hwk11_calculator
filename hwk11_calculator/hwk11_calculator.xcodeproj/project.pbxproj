@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6754FFF827B6806100E7DD92 /* UIButton+makeNewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6754FFF727B6806100E7DD92 /* UIButton+makeNewButton.swift */; };
-		6754FFFA27B68E7800E7DD92 /* UITextField+makeNewTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6754FFF927B68E7800E7DD92 /* UITextField+makeNewTextField.swift */; };
+		6754FFF827B6806100E7DD92 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6754FFF727B6806100E7DD92 /* ActionButton.swift */; };
+		6754FFFA27B68E7800E7DD92 /* NumTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6754FFF927B68E7800E7DD92 /* NumTextField.swift */; };
 		6761E40327B59AF4003F82EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6761E40227B59AF4003F82EF /* AppDelegate.swift */; };
 		6761E40527B59AF4003F82EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6761E40427B59AF4003F82EF /* SceneDelegate.swift */; };
 		6761E40727B59AF4003F82EF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6761E40627B59AF4003F82EF /* ViewController.swift */; };
@@ -16,11 +16,12 @@
 		6761E40C27B59AF6003F82EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6761E40B27B59AF6003F82EF /* Assets.xcassets */; };
 		6761E40F27B59AF6003F82EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6761E40D27B59AF6003F82EF /* LaunchScreen.storyboard */; };
 		6761E41727B59F01003F82EF /* UIColor+hexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6761E41627B59F01003F82EF /* UIColor+hexColor.swift */; };
+		67E5BF7827BAF0290085C416 /* MathFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E5BF7727BAF0290085C416 /* MathFunctions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6754FFF727B6806100E7DD92 /* UIButton+makeNewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+makeNewButton.swift"; sourceTree = "<group>"; };
-		6754FFF927B68E7800E7DD92 /* UITextField+makeNewTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+makeNewTextField.swift"; sourceTree = "<group>"; };
+		6754FFF727B6806100E7DD92 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		6754FFF927B68E7800E7DD92 /* NumTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumTextField.swift; sourceTree = "<group>"; };
 		6761E3FF27B59AF4003F82EF /* hwk11_calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hwk11_calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6761E40227B59AF4003F82EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6761E40427B59AF4003F82EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -30,6 +31,7 @@
 		6761E40E27B59AF6003F82EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6761E41027B59AF6003F82EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6761E41627B59F01003F82EF /* UIColor+hexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+hexColor.swift"; sourceTree = "<group>"; };
+		67E5BF7727BAF0290085C416 /* MathFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathFunctions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,8 +67,9 @@
 				6761E40227B59AF4003F82EF /* AppDelegate.swift */,
 				6761E40427B59AF4003F82EF /* SceneDelegate.swift */,
 				6761E41627B59F01003F82EF /* UIColor+hexColor.swift */,
-				6754FFF727B6806100E7DD92 /* UIButton+makeNewButton.swift */,
-				6754FFF927B68E7800E7DD92 /* UITextField+makeNewTextField.swift */,
+				6754FFF727B6806100E7DD92 /* ActionButton.swift */,
+				6754FFF927B68E7800E7DD92 /* NumTextField.swift */,
+				67E5BF7727BAF0290085C416 /* MathFunctions.swift */,
 				6761E40627B59AF4003F82EF /* ViewController.swift */,
 				6761E40827B59AF4003F82EF /* Main.storyboard */,
 				6761E40B27B59AF6003F82EF /* Assets.xcassets */,
@@ -147,12 +150,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6754FFFA27B68E7800E7DD92 /* UITextField+makeNewTextField.swift in Sources */,
+				6754FFFA27B68E7800E7DD92 /* NumTextField.swift in Sources */,
 				6761E40727B59AF4003F82EF /* ViewController.swift in Sources */,
 				6761E40327B59AF4003F82EF /* AppDelegate.swift in Sources */,
 				6761E41727B59F01003F82EF /* UIColor+hexColor.swift in Sources */,
+				67E5BF7827BAF0290085C416 /* MathFunctions.swift in Sources */,
 				6761E40527B59AF4003F82EF /* SceneDelegate.swift in Sources */,
-				6754FFF827B6806100E7DD92 /* UIButton+makeNewButton.swift in Sources */,
+				6754FFF827B6806100E7DD92 /* ActionButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
