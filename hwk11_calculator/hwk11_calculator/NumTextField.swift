@@ -8,13 +8,12 @@
 import Foundation
 import UIKit
 
-
-
 class NumTextField: UITextField {
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return false
     }
+    
     static func makeTextField() -> NumTextField {
         let tF = NumTextField()
         tF.translatesAutoresizingMaskIntoConstraints = false
@@ -26,5 +25,4 @@ class NumTextField: UITextField {
         tF.font = UIFont(name: "AvenirNextCondensed-Regular", size: 60)
         return tF
     }
-    
 }
