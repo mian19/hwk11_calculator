@@ -42,15 +42,15 @@ class ViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = UIColor.init(hex: "#000000")
         setElements()
         workWithButtons()
     }
-
+    
     //MARK: - set elements on screen
     private func setElements() {
         //width = 5 spaces * 15 + 4 * buttonSide
@@ -145,17 +145,17 @@ class ViewController: UIViewController {
             fourButton.widthAnchor.constraint(equalToConstant: buttonSide),
             fourButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: spaceBetwenButtons),
             fourButton.topAnchor.constraint(equalTo: sevenButton.bottomAnchor, constant: spaceBetwenButtons),
-
+            
             fiveButton.heightAnchor.constraint(equalToConstant: buttonSide),
             fiveButton.widthAnchor.constraint(equalToConstant: buttonSide),
             fiveButton.leadingAnchor.constraint(equalTo: fourButton.trailingAnchor, constant: spaceBetwenButtons),
             fiveButton.topAnchor.constraint(equalTo: sevenButton.bottomAnchor, constant: spaceBetwenButtons),
-
+            
             sixButton.heightAnchor.constraint(equalToConstant: buttonSide),
             sixButton.widthAnchor.constraint(equalToConstant: buttonSide),
             sixButton.leadingAnchor.constraint(equalTo: fiveButton.trailingAnchor, constant: spaceBetwenButtons),
             sixButton.topAnchor.constraint(equalTo: sevenButton.bottomAnchor, constant: spaceBetwenButtons),
-
+            
             minusButton.heightAnchor.constraint(equalToConstant: buttonSide),
             minusButton.widthAnchor.constraint(equalToConstant: buttonSide),
             minusButton.topAnchor.constraint(equalTo: sevenButton.bottomAnchor, constant: spaceBetwenButtons),
@@ -165,17 +165,17 @@ class ViewController: UIViewController {
             oneButton.widthAnchor.constraint(equalToConstant: buttonSide),
             oneButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: spaceBetwenButtons),
             oneButton.topAnchor.constraint(equalTo: fourButton.bottomAnchor, constant: spaceBetwenButtons),
-
+            
             twoButton.heightAnchor.constraint(equalToConstant: buttonSide),
             twoButton.widthAnchor.constraint(equalToConstant: buttonSide),
             twoButton.leadingAnchor.constraint(equalTo: fourButton.trailingAnchor, constant: spaceBetwenButtons),
             twoButton.topAnchor.constraint(equalTo: fourButton.bottomAnchor, constant: spaceBetwenButtons),
-
+            
             threeButton.heightAnchor.constraint(equalToConstant: buttonSide),
             threeButton.widthAnchor.constraint(equalToConstant: buttonSide),
             threeButton.leadingAnchor.constraint(equalTo: fiveButton.trailingAnchor, constant: spaceBetwenButtons),
             threeButton.topAnchor.constraint(equalTo: fourButton.bottomAnchor, constant: spaceBetwenButtons),
-
+            
             plusButton.heightAnchor.constraint(equalToConstant: buttonSide),
             plusButton.widthAnchor.constraint(equalToConstant: buttonSide),
             plusButton.topAnchor.constraint(equalTo: fourButton.bottomAnchor, constant: spaceBetwenButtons),
@@ -185,18 +185,18 @@ class ViewController: UIViewController {
             zeroButton.widthAnchor.constraint(equalToConstant: buttonSide * 2 + spaceBetwenButtons),
             zeroButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: spaceBetwenButtons),
             zeroButton.topAnchor.constraint(equalTo: oneButton.bottomAnchor, constant: spaceBetwenButtons),
-
-
+            
+            
             dotButton.heightAnchor.constraint(equalToConstant: buttonSide),
             dotButton.widthAnchor.constraint(equalToConstant: buttonSide),
             dotButton.leadingAnchor.constraint(equalTo: zeroButton.trailingAnchor, constant: spaceBetwenButtons),
             dotButton.topAnchor.constraint(equalTo: oneButton.bottomAnchor, constant: spaceBetwenButtons),
-
+            
             equalButton.heightAnchor.constraint(equalToConstant: buttonSide),
             equalButton.widthAnchor.constraint(equalToConstant: buttonSide),
             equalButton.topAnchor.constraint(equalTo: oneButton.bottomAnchor, constant: spaceBetwenButtons),
             view.trailingAnchor.constraint(equalTo: equalButton.trailingAnchor, constant: spaceBetwenButtons),
-                    
+            
         ])
     }
     
@@ -209,7 +209,8 @@ class ViewController: UIViewController {
         
         dotButton.addTarget(self, action: #selector(pressedDot), for: .touchUpInside)
         acButton.addTarget(self, action: #selector(pressedAC), for: .touchUpInside)
-        
+        plusminusButton.addTarget(self, action: #selector(pressedPlusMinus), for: .touchUpInside)
+        zeroButton.addTarget(self, action: #selector(pressedZero), for: .touchUpInside)
     }
     
     @objc private func touchDown(sender: UIButton) {
@@ -235,11 +236,27 @@ class ViewController: UIViewController {
             numField.text = sender.titleLabel?.text
             acButton.setTitle("C", for: .normal)
             numberOfFiguresInNumField += 1
+        } else if (numField.text == "-0") {
+            numField.text = "-" + (sender.titleLabel?.text)!
+            acButton.setTitle("C", for: .normal)
         } else if numberOfFiguresInNumField < 9 {
             numField.text! += (sender.titleLabel?.text)!
             numberOfFiguresInNumField += 1
         }
     }
+    
+    @objc private func pressedZero(sender: UIButton) {
+        if numField.text! == "0" || numField.text! == "-0"   {
+            return
+        } else if numField.text == "Error" {
+            numField.text = "0"
+            numberOfFiguresInNumField += 1
+        } else {
+            numField.text! += "0"
+            numberOfFiguresInNumField += 1
+        }
+    }
+    
     
     @objc private func pressedDot() {
         if numField.text == "Error" {
@@ -262,9 +279,20 @@ class ViewController: UIViewController {
         }
     }
     
-
-}
+    @objc private func pressedPlusMinus() {
+        if !numField.text!.contains("-")  && numField.text != "Error" {
+            numField.text! = "-" + numField.text!
+        } else if numField.text == "Error" {
+            numField.text = "0,"
+            acButton.setTitle("C", for: .normal)
+        } else if numField.text!.contains("-") {
+            numField.text = String(numField.text!.dropFirst())
+        }
+    }
     
+    
+}
+
     
 
 
